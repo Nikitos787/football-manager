@@ -1,0 +1,26 @@
+<h2>Player list:</h2>
+<button (click)="createTransfer()" >Transfer Player To Another Team</button>
+<table >
+  <thead>
+  <tr>
+    <th>Id</th>
+    <th>Player Id</th>
+    <th>SellingTeam Id</th>
+    <th>Buying Team Id</th>
+    <th>Transfer Fee</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor = "let transfer of transfers">
+    <td> {{ transfer.id }}</td>
+    <td> {{ transfer.playerId }}</td>
+    <td> {{ transfer.sellingTeamId }}</td>
+    <td> {{ transfer.buyingTeamId }}</td>
+    <td> {{ transfer.transferFee }}</td>
+    <td>
+      <button *ngIf="transfer.id" (click)="getTransferDetails(transfer.id)" >View</button>
+    </td>
+  </tr>
+  </tbody>
+</table>

@@ -1,0 +1,41 @@
+<div >
+  <h3>Update Player</h3>
+  <form (ngSubmit)="onSubmit()">
+    <div >
+      <label>First Name</label>
+      <input type="text" id="firstName"
+             [(ngModel)]="player.firstName" name="firstName">
+    </div>
+
+    <div >
+      <label>Second Name</label>
+      <input type="text" id="secondName"
+             [(ngModel)]="player.secondName" name="secondName">
+    </div>
+
+    <div>
+      <label>City</label>
+      <input type="text" id="city"
+             [(ngModel)]="player.city" name="city">
+    </div>
+
+    <div >
+      <label>Country</label>
+      <input type="text" id="country"
+             [(ngModel)]="player.country" name="country">
+    </div>
+
+    <div>
+      <label>BirthDate</label>
+      <input type="date" id="birthDate"
+             [(ngModel)]="player.birthDate" name="birthDate">
+    </div>
+
+    <div >
+      <label>Position</label>
+      <input type="text" id="position"
+             [(ngModel)]="player.position" name="position">
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+</div>

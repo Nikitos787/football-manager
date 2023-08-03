@@ -1,0 +1,91 @@
+/* Styles for the overall container */
+
+div.firstBlock{
+  width: 50%;
+  background-color: antiquewhite;
+}
+
+div {
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  position: relative;
+}
+
+/* Styles for the heading */
+h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Styles for the labels */
+label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+/* Styles for the data fields */
+div > div {
+  margin-bottom: 10px;
+}
+
+/* Styles for the select dropdown */
+select {
+  padding: 6px;
+  margin-right: 10px;
+}
+
+/* Styles for the price field */
+div[ngIf="showPriceField"] {
+  margin-top: 20px;
+}
+
+label[for="teamSelect"] {
+  margin-right: 10px;
+}
+
+button.btn-delete{
+  padding: 8px 16px;
+  margin-right: 10px;
+  background-color: #dc2f2f;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+button.btn-fire{
+  padding: 8px 16px;
+  margin-right: 10px;
+  background-color: #ff0000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+button.btn-view-team{
+  padding: 8px 16px;
+  margin-right: 10px;
+  background-color: #22b2da;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+button.btn-toggle-price{
+  padding: 8px 16px;
+  margin-right: 10px;
+  background-color: #a2c11c;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+button.btn-update{
+  padding: 8px 16px;
+  margin-right: 10px;
+  background-color: #00b7c2;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+

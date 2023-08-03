@@ -1,0 +1,51 @@
+<h3>View Player Details</h3>
+<div class="firstBlock">
+  <div>
+    <label> <b> First Name: </b> </label> {{player.firstName}}
+  </div>
+  <div>
+    <label> <b> Second Name: </b> </label> {{player.secondName}}
+  </div>
+  <div>
+    <label> <b> City: </b> </label> {{player.city}}
+  </div>
+  <div>
+    <label> <b> Country: </b> </label> {{player.country}}
+  </div>
+  <div>
+    <label> <b> Date of beginning career: </b> </label> {{player.dateOfBeginningCareer}}
+  </div>
+  <div>
+    <label> <b> Birthdate: </b> </label> {{player.birthDate}}
+  </div>
+  <div>
+    <label> <b> Team Id:  </b> </label> {{player.teamId}}
+  </div>
+  <div>
+    <label> <b> Status: </b> </label> {{player.status}}
+  </div>
+  <div>
+    <label> <b> Position: </b> </label> {{player.position}}
+  </div>
+    <button *ngIf="player.id" (click)="updatePlayer(player.id)" class="btn-update" >Update</button>
+    <button *ngIf="player.id" (click)="deletePlayer(player.id)" class="btn-delete">Delete</button>
+    <button *ngIf="player.id" (click)="firePlayer(player.id)" class="btn-fire">Fire</button>
+    <button *ngIf="player.teamId" (click)="goToTeamDetails(player.teamId)" class="btn-view-team">View Team Details</button>
+  <div *ngIf="player.id && player.teamId === null">
+    <label for="teamSelect">Choose a team to hire the player:</label>
+    <select id="teamSelect" [(ngModel)]="selectedTeamId">
+      <option *ngFor="let team of teams" [value]="team.id">{{ team.name }}</option>
+    </select>
+    <button (click)="hirePlayerToTeam(player.id, selectedTeamId)" class="btn-hire">Hire Player To Team</button>
+  </div>
+  <button (click)="togglePriceField()" class="btn-toggle-price">
+    {{ showPriceField ? 'Hide Price' : 'Show Price' }}
+  </button>
+
+  <!-- Price field (displayed when showPriceField is true) -->
+  <div *ngIf="showPriceField" >
+    <label>Transfer Fee</label>
+    <input type="number" id="transferFee"
+           [(ngModel)]="price" name="transferFee" [readonly]="true">
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<div class="header">
+<nav >
+  <ul>
+    <li >
+      <a routerLink="/players" routerLinkActive="active" >Player Menu</a>
+    </li>
+    <li>
+      <a routerLink="/teams" routerLinkActive="active" >Team Menu</a>
+    </li>
+    <li>
+      <a routerLink="/transfers" routerLinkActive="active" >Transfer Menu</a>
+    </li>
+  </ul>
+</nav>
+</div>
+<h1 >{{ title }}</h1>
+  <router-outlet></router-outlet>
+
+<app-messages></app-messages>
+
+
+<footer class="footer">
+  <div >
+    <span>All Rights Reserved 2023 @NikitaSalohub</span>
+  </div>
+</footer>

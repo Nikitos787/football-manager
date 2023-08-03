@@ -1,0 +1,24 @@
+<div>
+  <h3>Create Transfer</h3>
+  <form (ngSubmit)="onSubmit()">
+    <div>
+      <label>Player Id</label>
+      <input type="number" id="playerId"
+             [(ngModel)]="transfer.playerId" name="playerId">
+    </div>
+
+    <div>
+      <label>Selling Team Id</label>
+      <input type="number" id="sellingTeamId"
+             [(ngModel)]="transfer.sellingTeamId" name="sellingTeamId">
+    </div>
+
+    <div>
+      <label>Buying Team Id</label>
+      <input type="number" id="buyingTeamId"
+             [(ngModel)]="transfer.buyingTeamId" name="buyingTeamId">
+    </div>
+
+    <button type="submit">Submit</button>
+  </form>
+</div>
