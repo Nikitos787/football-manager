@@ -14,7 +14,6 @@ export class PlayerListComponent implements OnInit {
   page: number = 0;
   size: number = 5;
   showMoreThanLessButton: boolean = true;
-  currentPage: number = 0;
 
   constructor(private playerService: PlayerService,
               private router: Router,
@@ -39,14 +38,12 @@ export class PlayerListComponent implements OnInit {
   }
 
   getNextPage() {
-    this.currentPage = this.page
     this.page++;
     this.getPlayerList(this.page, this.size)
   }
 
   getPreviousPage() {
     if (this.page > 0) {
-      this.currentPage = this.page
       this.page--;
       this.getPlayerList(this.page, this.size);
     }
@@ -60,7 +57,6 @@ export class PlayerListComponent implements OnInit {
     } else {
         this.size -= 5;
     }
-    this.page = this.currentPage;
     this.getPlayerList(this.page, this.size);
   }
 }

@@ -70,6 +70,8 @@ public class PlayerController {
 
     @GetMapping("/search")
     public List<PlayerResponseDto> search(@RequestParam String name) {
-        return playerService.search(name).stream().map(playerMapper::toDto).toList();
+        return playerService.search(name).stream()
+                .map(playerMapper::toDto)
+                .toList();
     }
 }
