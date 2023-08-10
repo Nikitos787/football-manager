@@ -3,10 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { PlayerListComponent } from './player-list/player-list.component';
-import {HttpClientModule} from "@angular/common/http";
+import { HttpClientModule } from "@angular/common/http";
 import { AppRoutingModule } from './app-routing.module';
 import { CreatePlayerComponent } from './create-player/create-player.component';
-import {FormsModule} from "@angular/forms";
+import { FormsModule } from "@angular/forms";
 import { UpdatePlayerComponent } from './update-player/update-player.component';
 import { PlayerDetailsComponent } from './player-details/player-details.component';
 import { TeamListComponent } from './team-list/team-list.component';

@@ -1,41 +1,41 @@
-<div >
+<div class="player-form">
   <h3>Update Player</h3>
   <form (ngSubmit)="onSubmit()">
-    <div >
+    <div class="form-section">
       <label>First Name</label>
-      <input type="text" id="firstName"
+      <input placeholder="first name of player" type="text" id="firstName"
              [(ngModel)]="player.firstName" name="firstName">
     </div>
 
-    <div >
+    <div class="form-section">
       <label>Second Name</label>
-      <input type="text" id="secondName"
+      <input placeholder="second name of player" type="text" id="secondName"
              [(ngModel)]="player.secondName" name="secondName">
     </div>
 
-    <div>
+    <div class="form-section">
       <label>City</label>
-      <input type="text" id="city"
+      <input placeholder="city of player" type="text" id="city"
              [(ngModel)]="player.city" name="city">
     </div>
 
-    <div >
+    <div class="form-section">
       <label>Country</label>
-      <input type="text" id="country"
+      <input placeholder="country of player" type="text" id="country"
              [(ngModel)]="player.country" name="country">
     </div>
 
-    <div>
+    <div class="form-section">
       <label>BirthDate</label>
-      <input type="date" id="birthDate"
+      <input placeholder="birthdate of player" type="date" id="birthDate"
              [(ngModel)]="player.birthDate" name="birthDate">
     </div>
 
-    <div >
+    <div class="form-section">
       <label>Position</label>
-      <input type="text" id="position"
+      <input placeholder="position of player" type="text" id="position"
              [(ngModel)]="player.position" name="position">
     </div>
-    <button type="submit">Submit</button>
+    <button class="submit-button" type="submit">Submit</button>
   </form>
 </div>

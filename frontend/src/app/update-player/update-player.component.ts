@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {Player} from "../player";
-import {PlayerService} from "../player.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { Player } from "../models/player";
+import { PlayerService } from "../player.service";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: 'app-update-player',

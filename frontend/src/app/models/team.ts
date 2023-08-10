@@ -4,5 +4,5 @@ export class Team {
   city?: string;
   country?: string;
   budget?: number;
-  teamLevel?: string;
+  commission?: number;
 }

@@ -7,14 +7,14 @@ table {
 
 th {
   background-color: #f2f2f2;
-  padding: 8px;
-  text-align: left;
+  padding: 10px;
+  text-align: center;
   border-bottom: 1px solid #ddd;
 }
 
 td {
-  padding: 8px;
-  text-align: left;
+  padding: 10px;
+  text-align: center;
   border-bottom: 1px solid #ddd;
 }
 
@@ -25,8 +25,8 @@ button {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin-bottom: 10px;
   position: relative;
+  margin: 10px;
 }
 
 button:hover {
@@ -39,4 +39,27 @@ h2 {
 
 td {
   vertical-align: middle;
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px; /* Добавьте отступ сверху для разделения от таблицы */
+}
+
+.btn-prev, .btn-next {
+  background-color: #22b2da;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 8px 16px;
+}
+
+.btn-show {
+  background-color: #a2c11c;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 8px 16px;
 }

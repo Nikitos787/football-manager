@@ -1,4 +1,3 @@
-/* MessagesComponent's private CSS styles */
 .block {
   margin-bottom: 20px;
 }
@@ -11,8 +10,8 @@ h2 {
 
 .clear {
   display: flex;
-  justify-content: center; /* Выравнивание по горизонтали */
-  align-items: center; /* Выравнивание по вертикали */
+  justify-content: center;
+  align-items: center;
   color: #333;
   background-color: #eee;
   margin-bottom: 12px;

@@ -1,9 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {Player} from "../player";
-import {TeamService} from "../team.service";
-import {error} from "@angular/compiler-cli/src/transformers/util";
-import {ActivatedRoute, Router} from "@angular/router";
-import {Team} from "../team";
+import { Component, OnInit } from '@angular/core';
+import { Player } from "../models/player";
+import { TeamService } from "../team.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Team } from "../models/team";
 
 @Component({
   selector: 'app-player-list-by-team-id',

@@ -1,6 +1,5 @@
 package com.example.backend.dto.response;
 
-import com.example.backend.model.Team;
 import java.math.BigDecimal;
 import lombok.Data;
 
@@ -11,5 +10,5 @@ public class TeamResponseDto {
     private String country;
     private String city;
     private BigDecimal budget;
-    private Team.TeamLevel teamLevel;
+    private Integer commission;
 }

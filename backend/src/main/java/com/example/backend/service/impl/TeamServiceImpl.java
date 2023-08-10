@@ -7,11 +7,14 @@ import com.example.backend.service.TeamService;
 import java.util.List;
 import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class TeamServiceImpl implements TeamService {
+
     private final TeamRepository teamRepository;
     private final PlayerService playerService;
 
@@ -27,8 +30,8 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public List<Team> findAll() {
-        return teamRepository.findAll();
+    public Page<Team> findAll(Pageable pageable) {
+        return teamRepository.findAll(pageable);
     }
 
     @Override
@@ -38,13 +41,18 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
+    public List<Team> search(String name) {
+        return teamRepository.findTeamsByNameContainsIgnoreCase(name);
+    }
+
+    @Override
     public Team update(Long id, Team team) {
         Team teamById = findById(id);
         teamById.setName(team.getName());
         teamById.setCity(team.getCity());
         teamById.setCountry(team.getCountry());
         teamById.setBudget(team.getBudget());
-        teamById.setTeamLevel(team.getTeamLevel());
+        teamById.setCommission(team.getCommission());
         return save(teamById);
     }
 }

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable, of, tap} from "rxjs";
-import {Transfer} from "./transfer";
-import {MessageService} from "./message.service";
-import {catchError} from "rxjs/operators";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Observable, of, tap } from "rxjs";
+import { Transfer } from "./models/transfer";
+import { MessageService } from "./message.service";
+import { catchError } from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +18,8 @@ export class TransferService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  getTransferList(): Observable<Transfer[]> {
-    return this.httpClient.get<Transfer[]>(`${this.baseUrl}`).pipe(
+  getTransferList(page: number, size: number): Observable<Transfer[]> {
+    return this.httpClient.get<Transfer[]>(`${this.baseUrl}?page=${page}&size=${size}`).pipe(
       tap(_ => this.log('fetched transfer')),
       catchError(this.handleError<Transfer[]>('getTransfers', []))
     );

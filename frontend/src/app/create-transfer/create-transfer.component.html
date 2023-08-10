@@ -1,24 +1,52 @@
-<div>
+<div class="transfer-form">
   <h3>Create Transfer</h3>
   <form (ngSubmit)="onSubmit()">
-    <div>
-      <label>Player Id</label>
-      <input type="number" id="playerId"
-             [(ngModel)]="transfer.playerId" name="playerId">
+    <div class="form-section">
+      <label>Search Player</label>
+      <div class="input-button-container">
+        <input [(ngModel)]="searchPlayerName" name="searchPlayer"
+               placeholder="Enter player's last name">
+        <button type="button" (click)="searchForPlayer()">Find Player</button>
+      </div>
+      <div *ngIf="players.length > 0" class="select-container">
+        <label for="playerForSell">Choose Player</label>
+        <select id="playerForSell" [(ngModel)]="transfer.playerId" name="playerForSell">
+          <option *ngFor="let player of players"
+                  [value]="player.id">{{ player.secondName }}</option>
+        </select>
+      </div>
     </div>
 
-    <div>
-      <label>Selling Team Id</label>
-      <input type="number" id="sellingTeamId"
-             [(ngModel)]="transfer.sellingTeamId" name="sellingTeamId">
+    <div class="form-section">
+      <label>Search Selling Team</label>
+      <div class="input-button-container">
+        <input [(ngModel)]="searchSellingTeamName" name="searchSellTeam"
+               placeholder="Enter team's name">
+        <button type="button" (click)="searchForSellingTeamTeam()">Find Selling Team</button>
+      </div>
+      <div *ngIf="sellTeams.length > 0" class="select-container">
+        <label for="sellTeam">Choose Selling Team</label>
+        <select id="sellTeam" [(ngModel)]="transfer.sellingTeamId" name="sellTeam">
+          <option *ngFor="let team of sellTeams" [value]="team.id">{{ team.name }}</option>
+        </select>
+      </div>
     </div>
 
-    <div>
-      <label>Buying Team Id</label>
-      <input type="number" id="buyingTeamId"
-             [(ngModel)]="transfer.buyingTeamId" name="buyingTeamId">
+    <div class="form-section">
+      <label>Search Buying Team</label>
+      <div class="input-button-container">
+        <input [(ngModel)]="searchBuyingTeamName" name="searchBuyTeam"
+               placeholder="Enter team's name">
+        <button type="button" (click)="searchForBuyingTeamTeam()">Find Buying Team</button>
+      </div>
+      <div *ngIf="buyTeams.length > 0" class="select-container">
+        <label for="buyTeam">Choose Buying Team</label>
+        <select id="buyTeam" [(ngModel)]="transfer.buyingTeamId" name="buyTeam">
+          <option *ngFor="let team of buyTeams" [value]="team.id">{{ team.name }}</option>
+        </select>
+      </div>
     </div>
 
-    <button type="submit">Submit</button>
+    <button type="submit" class="submit-button">Submit</button>
   </form>
 </div>
