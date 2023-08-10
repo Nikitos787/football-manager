@@ -2,8 +2,6 @@ package com.example.backend.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,13 +28,8 @@ public class Team {
     private String city;
     @Column(nullable = false, name = "budget")
     private BigDecimal budget;
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, name = "team_level")
-    private TeamLevel teamLevel;
     @Column(nullable = false, name = "deleted")
     private boolean deleted = Boolean.FALSE;
-
-    public enum TeamLevel {
-        HIGH, LOW
-    }
+    @Column(nullable = false, name = "commission")
+    private Integer commission;
 }

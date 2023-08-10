@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -36,8 +38,8 @@ public class TeamController {
     }
 
     @GetMapping
-    public List<TeamResponseDto> findAll() {
-        return teamService.findAll().stream()
+    public List<TeamResponseDto> findAll(Pageable pageable) {
+        return teamService.findAll(pageable).stream()
                 .map(teamMapper::toDto)
                 .collect(Collectors.toList());
     }
@@ -71,4 +73,10 @@ public class TeamController {
     public void delete(@PathVariable Long id) {
         teamService.delete(id);
     }
+
+    @GetMapping("/search")
+    public List<TeamResponseDto> search(@RequestParam String name) {
+        return teamService.search(name).stream().map(teamMapper::toDto).toList();
+    }
+
 }

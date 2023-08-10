@@ -1,48 +1,42 @@
-/* Styles for the overall container */
-
-div.firstBlock{
-  width: 50%;
-  background-color: antiquewhite;
-}
-
-div {
-  padding: 10px;
+.player-details-form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
   border: 1px solid #ccc;
-  background-color: #f9f9f9;
-  position: relative;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Styles for the heading */
-h3 {
-  font-size: 24px;
+.form-section {
   margin-bottom: 20px;
 }
 
-/* Styles for the labels */
-label {
+.label {
   font-weight: bold;
-  margin-right: 10px;
 }
 
-/* Styles for the data fields */
-div > div {
-  margin-bottom: 10px;
+.input-button-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-/* Styles for the select dropdown */
+input, select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  width: 100%;
+}
+
 select {
-  padding: 6px;
-  margin-right: 10px;
+  width: 100%;
 }
 
-/* Styles for the price field */
-div[ngIf="showPriceField"] {
-  margin-top: 20px;
+.submit-button:hover {
+  background-color: #0056b3;
 }
 
-label[for="teamSelect"] {
-  margin-right: 10px;
-}
 
 button.btn-delete{
   padding: 8px 16px;
@@ -74,10 +68,22 @@ button.btn-view-team{
 button.btn-toggle-price{
   padding: 8px 16px;
   margin-right: 10px;
+  margin-top: 10px;
   background-color: #a2c11c;
   color: #fff;
   border: none;
   cursor: pointer;
+}
+
+.team-input-field {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 95%;
+}
+
+.team-select-field {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 button.btn-update{
@@ -89,3 +95,24 @@ button.btn-update{
   cursor: pointer;
 }
 
+.btn-search {
+  padding: 8px 16px;
+  margin-right: 10px;
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-hire {
+  padding: 8px 16px;
+  margin-right: 10px;
+  background-color: lightseagreen;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.buttons {
+  display: inline-flex;
+}

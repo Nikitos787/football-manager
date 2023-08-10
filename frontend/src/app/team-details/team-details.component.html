@@ -10,10 +10,10 @@
     <label> <b> Country: </b> </label> {{team.country}}
   </div>
   <div>
-    <label> <b> Budget: </b> </label> {{team.budget}}
+    <label> <b> Budget: </b> </label> {{team.budget}} USD
   </div>
   <div>
-    <label> <b> TeamLevel: </b> </label> {{team.teamLevel}}
+    <label> <b> Commission: </b> </label> {{ team.commission | number: '1.2-2' }}%
   </div>
   <button *ngIf="team.id" (click)="updateTeam(team.id)" class="btn-update">Update</button>
   <button *ngIf="team.id" (click)="deleteTeam(team.id)" class="btn-delete">Delete</button>

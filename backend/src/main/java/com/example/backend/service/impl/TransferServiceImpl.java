@@ -1,5 +1,6 @@
 package com.example.backend.service.impl;
 
+import com.example.backend.exception.TransferStatusException;
 import com.example.backend.model.Player;
 import com.example.backend.model.Team;
 import com.example.backend.model.Transfer;
@@ -7,14 +8,14 @@ import com.example.backend.repository.TransferRepository;
 import com.example.backend.service.PlayerService;
 import com.example.backend.service.TeamService;
 import com.example.backend.service.TransferService;
-import com.example.backend.strategy.CommissionStrategy;
-import com.example.backend.strategy.CorrectiveStrategy;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
 import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,8 +26,6 @@ public class TransferServiceImpl implements TransferService {
     private final TransferRepository transferRepository;
     private final TeamService teamService;
     private final PlayerService playerService;
-    private final CommissionStrategy commissionStrategy;
-    private final CorrectiveStrategy correctiveStrategy;
 
     @Override
     public Transfer save(Transfer transfer) {
@@ -36,24 +35,16 @@ public class TransferServiceImpl implements TransferService {
 
         validateTransferData(buyingTeam, sellingTeam, player);
 
-        BigDecimal priceForTransfer = calculatePriceWithoutCommission(player.getId());
-        BigDecimal commissionWithoutFactor = commissionStrategy.get(priceForTransfer)
-                .calculateCommission(priceForTransfer);
-        BigDecimal factor = correctiveStrategy.get(buyingTeam.getTeamLevel())
-                .factor(buyingTeam.getTeamLevel());
-        BigDecimal commission = commissionWithoutFactor.multiply(factor);
-        BigDecimal amountToPay = priceForTransfer.add(commission);
+        BigDecimal amountToPay = getTransferFee(buyingTeam, player, transfer);
 
         validateBudgetForTransferOperation(buyingTeam, amountToPay);
 
         buyingTeam.setBudget(buyingTeam.getBudget().subtract(amountToPay));
         sellingTeam.setBudget(sellingTeam.getBudget().add(amountToPay));
-        player.setTeam(buyingTeam);
         transfer.setTransferFee(amountToPay);
 
-        playerService.changeTeamForTransfer(player.getId(), buyingTeam);
-        teamService.update(buyingTeam.getId(), buyingTeam);
-        teamService.update(sellingTeam.getId(), sellingTeam);
+        updateDataInDataBase(buyingTeam, sellingTeam, player);
+
         return transferRepository.save(transfer);
     }
 
@@ -64,8 +55,8 @@ public class TransferServiceImpl implements TransferService {
     }
 
     @Override
-    public List<Transfer> findAll() {
-        return transferRepository.findAll();
+    public Page<Transfer> findAll(Pageable pageable) {
+        return transferRepository.findAll(pageable);
     }
 
     @Override
@@ -87,20 +78,36 @@ public class TransferServiceImpl implements TransferService {
                                       Team sellingTeam,
                                       Player player) {
         if (buyingTeam.getId().equals(sellingTeam.getId())) {
-            throw new RuntimeException("For transfer buying team and selling "
+            throw new TransferStatusException("For transfer buying team and selling "
                     + "team can't be the same");
         }
         if (player.getStatus() == Player.Status.UNEMPLOYED) {
-            throw new RuntimeException(String.format("For transfer player cannot be %s",
+            throw new TransferStatusException(String.format("For transfer player cannot be %s",
                     Player.Status.UNEMPLOYED.name()));
         }
     }
 
     private void validateBudgetForTransferOperation(Team buyingTeam, BigDecimal amountToPay) {
         if (buyingTeam.getBudget().subtract(amountToPay).compareTo(BigDecimal.ZERO) < 0) {
-            throw new RuntimeException(String
+            throw new TransferStatusException(String
                     .format("Don't enough money for transfer in buying team with id: %s",
                             buyingTeam.getId()));
         }
+    }
+
+    private BigDecimal getTransferFee(Team buyingTeam, Player player, Transfer transfer) {
+        BigDecimal amountWithoutCommission = calculatePriceWithoutCommission(player.getId());
+
+        BigDecimal commissionAmount = amountWithoutCommission
+                .multiply(BigDecimal.valueOf(buyingTeam.getCommission()))
+                .divide(BigDecimal.valueOf(100), RoundingMode.HALF_UP);
+
+        return amountWithoutCommission.add(commissionAmount);
+    }
+
+    private void updateDataInDataBase(Team buyingTeam, Team sellingTeam, Player player) {
+        playerService.changeTeamForTransfer(player.getId(), buyingTeam);
+        teamService.update(buyingTeam.getId(), buyingTeam);
+        teamService.update(sellingTeam.getId(), sellingTeam);
     }
 }

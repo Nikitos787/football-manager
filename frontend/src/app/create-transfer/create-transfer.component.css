@@ -1,43 +1,49 @@
+.transfer-form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-h3 {
-  color: #333;
-  font-size: 20px;
+.form-section {
   margin-bottom: 20px;
 }
 
-form {
-  display: inherit;
-  flex-direction: column;
-  max-width: 200px;
-  margin: 10px;
-}
-
-form div {
-  margin-bottom: 10px;
-}
-
-label {
+.label {
   font-weight: bold;
+}
+
+.input-button-container {
   display: flex;
-
+  align-items: center;
+  gap: 10px;
 }
 
-input {
-  padding: 5px;
+input, select, button {
+  padding: 8px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 5px;
+  font-size: 14px;
+  width: 100%;
 }
 
-button {
-  padding: 8px 12px;
+select {
+  width: 100%;
+}
+
+.submit-button {
   background-color: #007bff;
   color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
+  padding: 10px 20px;
   cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
 }
 
-button:hover {
+.submit-button:hover {
   background-color: #0056b3;
 }
-

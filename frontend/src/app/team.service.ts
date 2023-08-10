@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable, of, tap} from "rxjs";
-import {Player} from "./player";
-import {Team} from "./team";
-import {MessageService} from "./message.service";
-import {catchError} from "rxjs/operators";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Observable, of, tap } from "rxjs";
+import { Player } from "./models/player";
+import { Team } from "./models/team";
+import { MessageService } from "./message.service";
+import { catchError } from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -19,10 +19,17 @@ export class TeamService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  getTeamList(): Observable<Team[]>{
-    return this.httpClient.get<Team[]>(`${this.baseUrl}`).pipe(
+  getTeamList(page: number, size: number): Observable<Team[]>{
+    return this.httpClient.get<Team[]>(`${this.baseUrl}?page=${page}&size=${size}`).pipe(
       tap(_ => this.log('fetched teams')),
       catchError(this.handleError<Team[]>('getTeams', []))
+    );
+  }
+
+  search(name: String): Observable<Team[]>{
+    return this.httpClient.get<Team[]>(`${this.baseUrl}/search?name=${name}`).pipe(
+      tap(_ => this.log('fetched teams by name')),
+      catchError(this.handleError<Team[]>('getTeamByNae', []))
     );
   }
 
@@ -93,4 +100,3 @@ export class TeamService {
     this.messageService.add(`PlayerService: ${message}`);
   }
 }
-

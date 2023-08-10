@@ -1,13 +1,15 @@
 package com.example.backend.service.impl;
 
+import com.example.backend.exception.PlayerStatusException;
 import com.example.backend.model.Player;
 import com.example.backend.model.Team;
 import com.example.backend.repository.PlayerRepository;
 import com.example.backend.service.PlayerService;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,12 +26,12 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public Player findById(Long id) {
         return playerRepository.findById(id).orElseThrow(() ->
-                new NoSuchElementException(String.format("Can't find player by id: %s in DB", id)));
+                new PlayerStatusException(String.format("Can't find player by id: %s in DB", id)));
     }
 
     @Override
-    public List<Player> findAll() {
-        return playerRepository.findAll();
+    public Page<Player> findAll(Pageable pageable) {
+        return playerRepository.findAll(pageable);
     }
 
     @Override
@@ -38,7 +40,7 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public Player update(Long id, Player player) {
+    public Player updatePlayerInfo(Long id, Player player) {
         Player playerById = findById(id);
         playerById.setBirthDate(player.getBirthDate());
         playerById.setCountry(player.getCountry());
@@ -50,10 +52,10 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public void hire(Long playerId, Team team) {
+    public void hirePlayerToTeam(Long playerId, Team team) {
         Player player = findById(playerId);
         if (player.getStatus() == Player.Status.EMPLOYED) {
-            throw new RuntimeException("Employed player cannot have opportunity"
+            throw new PlayerStatusException("Employed player cannot have opportunity"
                     + " to be hired by another team. Only UnEmployed player can be hired");
         }
         player.setTeam(team);
@@ -62,7 +64,12 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public void fire(Long playerId, Team team) {
+    public List<Player> search(String name) {
+        return playerRepository.findAllBySecondNameContainsIgnoreCase(name);
+    }
+
+    @Override
+    public void firePlayerFromTeam(Long playerId) {
         Player player = findById(playerId);
         player.setTeam(null);
         player.setStatus(Player.Status.UNEMPLOYED);
@@ -80,7 +87,7 @@ public class PlayerServiceImpl implements PlayerService {
     public void fireAllByTeam(Team team) {
         List<Player> players = findAllByTeam(team);
         players.forEach(player -> {
-            player.setTeam(null);
+            firePlayerFromTeam(player.getId());
             player.setStatus(Player.Status.UNEMPLOYED);
             playerRepository.save(player);
         });

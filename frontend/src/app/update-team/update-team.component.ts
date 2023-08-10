@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {Team} from "../team";
-import {TeamService} from "../team.service";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from "@angular/router";
+import { Team } from "../models/team";
+import { TeamService } from "../team.service";
 
 @Component({
   selector: 'app-update-team',

@@ -1,28 +1,32 @@
-<h2>Player list:</h2>
-<button (click)="createTeam()" >Create New Team</button>
-<table >
+<h2>Team list:</h2>
+<button (click)="createTeam()">Create New Team</button>
+<table>
   <thead>
   <tr>
     <th>Id</th>
     <th>Name</th>
     <th>City</th>
     <th>Country</th>
-    <th>Budget</th>
-    <th>TeamLevel</th>
     <th>Actions</th>
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor = "let team of teams">
+  <tr *ngFor="let team of teams">
     <td> {{ team.id }}</td>
     <td> {{ team.name }}</td>
     <td> {{ team.city }}</td>
     <td> {{ team.country }}</td>
-    <td> {{ team.budget }}</td>
-    <td> {{ team.teamLevel }}</td>
     <td>
-      <button *ngIf="team.id" (click)="teamDetails(team.id)" >View</button>
+      <button *ngIf="team.id" (click)="teamDetails(team.id)">View</button>
     </td>
   </tr>
   </tbody>
 </table>
+<div class="pagination-container">
+  <button class="btn-prev" (click)="getPreviousPage()">Previous Page</button>
+  <button class="btn-show" (click)="toggleShowMoreThanLessButton()">
+    {{showMoreThanLessButton ? 'Show More' : 'Show Less' }}
+  </button>
+  <button class="btn-next" (click)="getNextPage()">Next Page</button>
+
+</div>

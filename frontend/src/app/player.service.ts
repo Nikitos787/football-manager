@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable, of, tap} from "rxjs";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Observable, of, tap } from "rxjs";
 import { catchError } from 'rxjs/operators';
-import {Player} from "./player";
-import {MessageService} from "./message.service";
+import { Player} from "./models/player";
+import { MessageService } from "./message.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,24 +12,29 @@ export class PlayerService {
   private baseUrl = "/api/players"
 
   constructor(private httpClient: HttpClient,
-              private messageService: MessageService) { }
+              private messageService: MessageService) {
+  }
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({'Content-Type': 'application/json'})
   };
 
-  getPlayerList(): Observable<Player[]>{
-    return this.httpClient.get<Player[]>(`${this.baseUrl}`).pipe(
+  getPlayerList(page: number, size: number): Observable<Player[]> {
+    return this.httpClient.get<Player[]>(`${this.baseUrl}?page=${page}&size=${size}`).pipe(
       tap(_ => this.log('fetched players')),
       catchError(this.handleError<Player[]>('getPlayers', []))
     );
   }
 
-  createPlayer(player: Player): Observable<Object>{
+  createPlayer(player: Player): Observable<Object> {
     return this.httpClient.post(`${this.baseUrl}`, player, this.httpOptions).pipe(
       tap((player: Player) => this.log(`added player w/ id=${player.id}`)),
       catchError(this.handleError<Player>('addPlayer'))
     );
+  }
+
+  search(name: string): Observable<Player[]> {
+    return this.httpClient.get<Player[]>(`${this.baseUrl}/search?name=${name}`)
   }
 
   getPlayerById(id: number): Observable<Player> {
@@ -54,7 +59,7 @@ export class PlayerService {
   }
 
   firePlayerById(id: number): Observable<Object> {
-    return this.httpClient.delete(`${this.baseUrl}/${id}/fire`,this.httpOptions).pipe(
+    return this.httpClient.delete(`${this.baseUrl}/${id}/fire`, this.httpOptions).pipe(
       tap(_ => this.log(`fire Player by id=${id}`)),
       catchError(this.handleError<Object>('firePlayer'))
     );

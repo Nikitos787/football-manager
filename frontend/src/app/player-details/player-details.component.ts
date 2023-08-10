@@ -1,11 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {Player} from "../player";
-import {ActivatedRoute, Router} from "@angular/router";
-import {PlayerService} from "../player.service";
-import {Location} from "@angular/common";
-import {TeamService} from "../team.service";
-import {Team} from "../team";
-import {TransferService} from "../transfer.service";
+import { Component, OnInit } from '@angular/core';
+import { Player } from "../models/player";
+import { ActivatedRoute, Router } from "@angular/router";
+import { PlayerService } from "../player.service";
+import { Location } from "@angular/common";
+import { TeamService } from "../team.service";
+import { Team } from "../models/team";
+import { TransferService } from "../transfer.service";
+import { catchError } from "rxjs/operators";
+import { map, Observable, of } from "rxjs";
 
 @Component({
   selector: 'app-player-details',
@@ -20,6 +22,8 @@ export class PlayerDetailsComponent implements OnInit{
   price: number = 0;
   showPriceField: boolean = false;
   team: Team = new Team();
+  searchTeamName: string = '';
+  teamName: string;
   constructor(private activeRoute: ActivatedRoute,
               private playerService: PlayerService,
               private router: Router,
@@ -29,10 +33,9 @@ export class PlayerDetailsComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    // @ts-ignore
     this.id = +this.activeRoute.snapshot.paramMap.get('id');
     this.getPlayer(this.id);
-    this.getAllTeams()
+
   }
 
   updatePlayer(id: number) {
@@ -57,6 +60,7 @@ export class PlayerDetailsComponent implements OnInit{
     this.playerService.getPlayerById(id).subscribe(data => {
       this.player = data;
       console.log(data);
+      this.fetchTeamName();
     }, error => console.log(error));
   }
 
@@ -72,8 +76,8 @@ export class PlayerDetailsComponent implements OnInit{
     this.router.navigate(['team-details', id]);
   }
 
-  getAllTeams() {
-    this.teamService.getTeamList().subscribe(data => {
+  getTeamByName(name: string) {
+    this.teamService.search(name).subscribe(data => {
       this.teams = data;
       console.log(data);
     }, error => console.log(error));
@@ -89,8 +93,30 @@ export class PlayerDetailsComponent implements OnInit{
   togglePriceField() {
     this.showPriceField = !this.showPriceField;
     if (this.showPriceField) {
-      // Calculate the transfer fee when showing the price field
       this.calculateTransferFee(this.id);
     }
+  }
+
+  fetchTeamName() {
+    this.getTeamNameById(this.player.teamId).subscribe(
+      (teamName) => {
+        this.teamName = teamName;
+      },
+      (error) => console.log(error)
+    );
+  }
+
+  getTeamNameById(id: number): Observable<string> {
+    return this.teamService.getTeamById(id).pipe(
+      map(data => {
+        this.team = data;
+        console.log(data);
+        return this.team.name;
+      }),
+      catchError(error => {
+        console.log(error);
+        return of('Team name not available');
+      })
+    );
   }
 }
