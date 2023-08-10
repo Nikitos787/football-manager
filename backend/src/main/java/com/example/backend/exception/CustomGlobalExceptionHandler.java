@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -42,28 +43,23 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     }
 
     @ExceptionHandler(PlayerStatusException.class)
-    public ResponseEntity<ErrorMessage> handlePlayerStatusException(PlayerStatusException ex,
-                                                                  WebRequest request) {
-        ErrorMessage message = new ErrorMessage(
-                HttpStatus.NOT_FOUND.value(),
-                new Date(),
-                ex.getMessage(),
-                request.getDescription(false));
+    public ResponseEntity<Object> handlePlayerStatusException(PlayerStatusException exception) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timeStamp", LocalDateTime.now().toString());
+        body.put("status", HttpStatus.BAD_REQUEST);
 
-        return new ResponseEntity<ErrorMessage>(message, HttpStatus.NOT_FOUND);
+        body.put("error", exception.getMessage());
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(TransferStatusException.class)
-    public ResponseEntity<ErrorMessage> handleDataProcessingException(
-            TransferStatusException exception,
-            WebRequest request) {
-        ErrorMessage message = new ErrorMessage(
-                HttpStatus.NOT_FOUND.value(),
-                new Date(),
-                exception.getMessage(),
-                request.getDescription(false));
+    public ResponseEntity<Object> handlePlayerStatusException(TransferStatusException exception) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timeStamp", LocalDateTime.now().toString());
+        body.put("status", HttpStatus.BAD_REQUEST);
 
-        return new ResponseEntity<ErrorMessage>(message, HttpStatus.NOT_FOUND);
+        body.put("error", exception.getMessage());
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 
     private String getErrorMessage(ObjectError e) {
