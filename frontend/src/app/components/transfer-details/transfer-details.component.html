@@ -1,0 +1,16 @@
+<div class="transfer-form">
+  <h3>View Transfer Details</h3>
+  <div class="form-section">
+    <label> <b> Player: </b>
+    </label> {{transfer.playerResponseDto?.firstName}} {{transfer.playerResponseDto?.secondName}}
+  </div>
+  <div class="form-section">
+    <label> <b> Selling Team: </b> </label> {{transfer.sellTeamResponseDto?.name}}
+  </div>
+  <div class="form-section">
+    <label> <b> Buying Team: </b> </label>{{transfer.buyTeamResponseDto?.name}}
+  </div>
+  <div class="form-section">
+    <label> <b> Transfer Fee: </b> </label> {{transfer.transferFee }} USD
+  </div>
+</div>

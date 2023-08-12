@@ -2,7 +2,6 @@ package com.example.backend.service.impl;
 
 import com.example.backend.model.Team;
 import com.example.backend.repository.TeamRepository;
-import com.example.backend.service.PlayerService;
 import com.example.backend.service.TeamService;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -14,9 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class TeamServiceImpl implements TeamService {
-
     private final TeamRepository teamRepository;
-    private final PlayerService playerService;
 
     @Override
     public Team save(Team team) {
@@ -36,7 +33,6 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public void delete(Long id) {
-        playerService.fireAllByTeam(findById(id));
         teamRepository.deleteById(id);
     }
 

@@ -1,0 +1,36 @@
+<div class="team-form">
+  <h3>Create Team</h3>
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-section">
+      <label>Name</label>
+      <input placeholder="name of team" type="text" id="name"
+             [(ngModel)]="newTeam.name" name="name">
+    </div>
+
+    <div class="form-section">
+      <label>Country</label>
+      <input placeholder="country of team" type="text" id="country"
+             [(ngModel)]="newTeam.country" name="country">
+    </div>
+
+    <div class="form-section">
+      <label>City</label>
+      <input placeholder="city of team" type="text" id="city"
+             [(ngModel)]="newTeam.city" name="city">
+    </div>
+
+    <div class="form-section">
+      <label>Budget</label>
+      <input placeholder="budget of team" type="number" id="budget"
+             [(ngModel)]="newTeam.budget" name="budget">
+    </div>
+
+    <div class="form-section">
+      <label>Commission</label>
+      <input placeholder="commission of team" type="number" id="commission"
+             [(ngModel)]="newTeam.commission" name="commission">
+    </div>
+
+    <button type="submit" class="submit-button">Submit</button>
+  </form>
+</div>

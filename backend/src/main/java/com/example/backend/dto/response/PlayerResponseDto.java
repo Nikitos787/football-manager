@@ -13,7 +13,7 @@ public class PlayerResponseDto {
     private String country;
     private LocalDate dateOfBeginningCareer;
     private LocalDate birthDate;
-    private Long teamId;
+    private TeamResponseDto teamResponseDto;
     private Player.Status status;
     private Player.Position position;
 }

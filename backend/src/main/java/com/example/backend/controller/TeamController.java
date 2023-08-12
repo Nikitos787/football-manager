@@ -5,7 +5,6 @@ import com.example.backend.dto.response.PlayerResponseDto;
 import com.example.backend.dto.response.TeamResponseDto;
 import com.example.backend.mapper.PlayerMapper;
 import com.example.backend.mapper.TeamMapper;
-import com.example.backend.model.Team;
 import com.example.backend.service.PlayerService;
 import com.example.backend.service.TeamService;
 import jakarta.validation.Valid;
@@ -51,8 +50,7 @@ public class TeamController {
 
     @GetMapping("/{id}/players")
     public List<PlayerResponseDto> findAllByTeam(@PathVariable Long id) {
-        Team team = teamService.findById(id);
-        return playerService.findAllByTeam(team).stream()
+        return playerService.findAllByTeam(id).stream()
                 .map(playerMapper::toDto)
                 .collect(Collectors.toList());
     }
@@ -65,12 +63,12 @@ public class TeamController {
 
     @DeleteMapping("/{id}/fire")
     public void fireAllPlayersByTeam(@PathVariable Long id) {
-        Team team = teamService.findById(id);
-        playerService.fireAllByTeam(team);
+        playerService.fireAllByTeam(id);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
+        playerService.fireAllByTeam(id);
         teamService.delete(id);
     }
 

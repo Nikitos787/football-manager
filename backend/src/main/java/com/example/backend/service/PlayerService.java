@@ -1,7 +1,6 @@
 package com.example.backend.service;
 
 import com.example.backend.model.Player;
-import com.example.backend.model.Team;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,15 +16,15 @@ public interface PlayerService {
 
     void firePlayerFromTeam(Long playerId);
 
-    void changeTeamForTransfer(Long id, Team team);
+    void changeTeamForTransfer(Long id, Long teamId);
 
-    void fireAllByTeam(Team team);
+    void fireAllByTeam(Long teamId);
 
     void delete(Long id);
 
-    List<Player> findAllByTeam(Team team);
+    List<Player> findAllByTeam(Long teamId);
 
-    void hirePlayerToTeam(Long playerId, Team team);
+    void hirePlayerToTeam(Long playerId, Long teamId);
 
     List<Player> search(String name);
 }
