@@ -1,0 +1,63 @@
+<div class="player-details-form">
+  <h3>View Player Details</h3>
+  <div class="form-section">
+    <label> <b> First Name: </b> </label> {{player.firstName}}
+  </div>
+  <div class="form-section">
+    <label> <b> Second Name: </b> </label> {{player.secondName}}
+  </div>
+  <div class="form-section">
+    <label> <b> City: </b> </label> {{player.city}}
+  </div>
+  <div class="form-section">
+    <label> <b> Country: </b> </label> {{player.country}}
+  </div>
+  <div class="form-section">
+    <label> <b> Date of beginning career: </b> </label> {{player.dateOfBeginningCareer}}
+  </div>
+  <div class="form-section">
+    <label> <b> Birthdate: </b> </label> {{player.birthDate}}
+  </div>
+  <div class="form-section">
+    <label> <b>
+      Team: </b></label> {{ player.teamResponseDto ? player.teamResponseDto.name : 'No Team' }}
+  </div>
+  <div class="form-section">
+    <label> <b> Status: </b> </label> {{player.status}}
+  </div>
+  <div class="form-section">
+    <label> <b> Position: </b> </label> {{player.position}}
+  </div>
+  <div class="buttons">
+    <button *ngIf="player.id" (click)="updatePlayer(player.id)" class="btn-update">Update</button>
+    <button *ngIf="player.id" (click)="deletePlayer(player.id)" class="btn-delete">Delete</button>
+    <button *ngIf="player.id" (click)="firePlayer(player.id)" class="btn-fire">Fire</button>
+    <button *ngIf="player.teamResponseDto?.id" (click)="goToTeamDetails(player.teamResponseDto.id)"
+            class="btn-view-team">
+      View Team Details
+    </button>
+  </div>
+
+  <div *ngIf="player.teamResponseDto?.id === null">
+    <input class="team-input-field" [(ngModel)]="searchTeamName" placeholder="Enter team name">
+    <button class="btn-search" (click)="getTeamByName(searchTeamName)">Search Team</button>
+    <label for="teamSelect">Choose a team to hire the player:</label>
+    <select class="team-select-field" id="teamSelect" [(ngModel)]="selectedTeamId">
+      <option *ngFor="let team of teams" [value]="team.id">{{ team.name }}</option>
+    </select>
+    <button (click)="hirePlayerToTeam(player.id, selectedTeamId)" class="btn-hire">Hire Player To
+      Team
+    </button>
+
+  </div>
+  <button (click)="togglePriceField()" class="btn-toggle-price">
+    {{ showPriceField ? 'Hide Price' : 'Show Price' }}
+  </button>
+
+  <div *ngIf="showPriceField">
+    <label>Transfer Fee</label>
+    <input type="number" id="transferFee"
+           [(ngModel)]="price" name="transferFee" [readonly]="true">
+  </div>
+</div>
+

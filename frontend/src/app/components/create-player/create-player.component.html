@@ -1,0 +1,42 @@
+<div class="player-form">
+  <h3>Create Player</h3>
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-section">
+      <label>First Name</label>
+      <input placeholder="First name of player" type="text" id="firstName"
+             [(ngModel)]="newPlayer.firstName" name="firstName">
+    </div>
+
+    <div class="form-section">
+      <label>Second Name</label>
+      <input placeholder="Second name of player" type="text" id="secondName"
+             [(ngModel)]="newPlayer.secondName" name="secondName">
+    </div>
+
+    <div class="form-section">
+      <label>City</label>
+      <input placeholder="City of player" type="text" id="city"
+             [(ngModel)]="newPlayer.city" name="city">
+    </div>
+
+    <div class="form-section">
+      <label>Country</label>
+      <input placeholder="Country of player" type="text" id="country"
+             [(ngModel)]="newPlayer.country" name="country">
+    </div>
+
+    <div class="form-section">
+      <label>BirthDate</label>
+      <input placeholder="Birthdate of player" type="date" id="birthDate"
+             [(ngModel)]="newPlayer.birthDate" name="birthDate">
+    </div>
+
+    <div class="form-section">
+      <label>Position</label>
+      <input placeholder="Position of player" type="text" id="position"
+             [(ngModel)]="newPlayer.position" name="position">
+    </div>
+
+    <button type="submit" class="submit-button">Submit</button>
+  </form>
+</div>

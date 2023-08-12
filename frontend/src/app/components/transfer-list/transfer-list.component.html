@@ -1,0 +1,31 @@
+<h2>Player list:</h2>
+<button (click)="createTransfer()">Transfer Player To Another Team</button>
+<table>
+  <thead>
+  <tr>
+    <th>Id</th>
+    <th>Player</th>
+    <th>Selling Team</th>
+    <th>Buying Team</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let transfer of transfers">
+    <td> {{ transfer.id }}</td>
+    <td> {{ transfer.playerResponseDto.firstName }} {{ transfer.playerResponseDto.secondName }}</td>
+    <td> {{ transfer.sellTeamResponseDto.name }}</td>
+    <td> {{ transfer.buyTeamResponseDto.name }}</td>
+    <td>
+      <button *ngIf="transfer.id" (click)="getTransferDetails(transfer.id)">View</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<div class="pagination-container">
+  <button class="btn-prev" (click)="getPreviousPage()">Previous Page</button>
+  <button class="btn-show" (click)="toggleShowMoreThanLessButton()">
+    {{showMoreThanLessButton ? 'Show More' : 'Show Less' }}
+  </button>
+  <button class="btn-next" (click)="getNextPage()">Next Page</button>
+</div>

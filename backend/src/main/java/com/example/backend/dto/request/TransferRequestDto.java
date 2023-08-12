@@ -7,8 +7,6 @@ import lombok.Data;
 public class TransferRequestDto {
     @NotNull(message = "You should set player id")
     private Long playerId;
-    @NotNull(message = "You should set selling team id")
-    private Long sellingTeamId;
     @NotNull(message = "You should set buying team id")
     private Long buyingTeamId;
 }

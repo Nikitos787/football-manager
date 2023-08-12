@@ -1,0 +1,38 @@
+<div class="transfer-form">
+  <h3>Create Transfer</h3>
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-section">
+      <label>Search Player</label>
+      <div class="input-button-container">
+        <input [(ngModel)]="searchPlayerName" name="searchPlayer"
+               placeholder="Enter player's last name">
+        <button type="button" (click)="searchForPlayer()">Find Player</button>
+      </div>
+      <div *ngIf="players.length > 0" class="select-container">
+        <label for="playerForSell">Choose Player</label>
+        <select id="playerForSell" [(ngModel)]="newTransfer.playerId" name="playerForSell">
+          <option *ngFor="let player of players" [value]="player.id">
+            {{ player.secondName }} {{ player.firstName }} {{player.teamResponseDto?.name}}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <label>Search Buying Team</label>
+      <div class="input-button-container">
+        <input [(ngModel)]="searchBuyingTeamName" name="searchBuyTeam"
+               placeholder="Enter team's name">
+        <button type="button" (click)="searchForBuyingTeamTeam()">Find Buying Team</button>
+      </div>
+      <div *ngIf="buyTeams.length > 0" class="select-container">
+        <label for="buyTeam">Choose Buying Team</label>
+        <select id="buyTeam" [(ngModel)]="newTransfer.buyingTeamId" name="buyTeam">
+          <option *ngFor="let team of buyTeams" [value]="team.id">{{ team.name }}</option>
+        </select>
+      </div>
+    </div>
+
+    <button type="submit" class="submit-button">Submit</button>
+  </form>
+</div>

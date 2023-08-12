@@ -1,0 +1,118 @@
+.player-details-form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-section {
+  margin-bottom: 20px;
+}
+
+.label {
+  font-weight: bold;
+}
+
+.input-button-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+input, select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  width: 100%;
+}
+
+select {
+  width: 100%;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
+
+button.btn-delete {
+  padding: 8px 16px;
+  margin-right: 10px;
+  background-color: #dc2f2f;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+button.btn-fire {
+  padding: 8px 16px;
+  margin-right: 10px;
+  background-color: #ff0000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+button.btn-view-team {
+  padding: 8px 16px;
+  margin-right: 10px;
+  background-color: #22b2da;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+button.btn-toggle-price {
+  padding: 8px 16px;
+  margin-right: 10px;
+  margin-top: 10px;
+  background-color: #a2c11c;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.team-input-field {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 95%;
+}
+
+.team-select-field {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+button.btn-update {
+  padding: 8px 16px;
+  margin-right: 10px;
+  background-color: #00b7c2;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-search {
+  padding: 8px 16px;
+  margin-right: 10px;
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-hire {
+  padding: 8px 16px;
+  margin-right: 10px;
+  background-color: lightseagreen;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.buttons {
+  display: inline-flex;
+}

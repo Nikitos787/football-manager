@@ -1,0 +1,35 @@
+<h2>Player list:</h2>
+<button (click)="createPlayer()">Create New Player</button>
+<table>
+  <thead>
+  <tr>
+    <th>Id</th>
+    <th>First Name</th>
+    <th>Second Name</th>
+    <th>Country</th>
+    <th>Team</th>
+    <th>Position</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let player of players">
+    <td> {{ player.id }}</td>
+    <td> {{ player.firstName }}</td>
+    <td> {{ player.secondName }}</td>
+    <td> {{ player.country }}</td>
+    <td> {{ player.teamResponseDto ? player.teamResponseDto.name : 'No Team Available'}}</td>
+    <td> {{ player.position }}</td>
+    <td>
+      <button *ngIf="player.id" (click)="playerDetails(player.id)">View</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<div class="pagination-container">
+  <button class="btn-prev" (click)="getPreviousPage()">Previous Page</button>
+  <button class="btn-show" (click)="toggleShowMoreThanLessButton()">
+    {{showMoreThanLessButton ? 'Show More' : 'Show Less' }}
+  </button>
+  <button class="btn-next" (click)="getNextPage()">Next Page</button>
+</div>

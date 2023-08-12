@@ -6,8 +6,8 @@ import lombok.Data;
 @Data
 public class TransferResponseDto {
     private Long id;
-    private Long playerId;
-    private Long sellingTeamId;
-    private Long buyingTeamId;
+    private PlayerResponseDto playerResponseDto;
+    private TeamResponseDto sellTeamResponseDto;
+    private TeamResponseDto buyTeamResponseDto;
     private BigDecimal transferFee;
 }

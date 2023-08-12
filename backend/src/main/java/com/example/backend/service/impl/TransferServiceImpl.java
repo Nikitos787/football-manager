@@ -30,18 +30,18 @@ public class TransferServiceImpl implements TransferService {
     @Override
     public Transfer save(Transfer transfer) {
         Team buyingTeam = teamService.findById(transfer.getBuyingTeam().getId());
-        Team sellingTeam = teamService.findById(transfer.getSellingTeam().getId());
         Player player = playerService.findById(transfer.getPlayer().getId());
+        Team sellingTeam = getSellingTeam(player);
 
         validateTransferData(buyingTeam, sellingTeam, player);
 
-        BigDecimal amountToPay = getTransferFee(buyingTeam, player, transfer);
+        BigDecimal amountToPay = getTransferFee(buyingTeam, player);
 
-        validateBudgetForTransferOperation(buyingTeam, amountToPay);
+        performBudgetUpdates(buyingTeam, sellingTeam, amountToPay);
 
-        buyingTeam.setBudget(buyingTeam.getBudget().subtract(amountToPay));
-        sellingTeam.setBudget(sellingTeam.getBudget().add(amountToPay));
         transfer.setTransferFee(amountToPay);
+        transfer.setSellingTeam(sellingTeam);
+        transfer.setBuyingTeam(buyingTeam);
 
         updateDataInDataBase(buyingTeam, sellingTeam, player);
 
@@ -62,8 +62,34 @@ public class TransferServiceImpl implements TransferService {
     @Override
     public BigDecimal calculatePriceWithoutCommission(Long playerId) {
         Player player = playerService.findById(playerId);
-        return BigDecimal.valueOf(getAmountOfMonthExperience(player.getDateOfBeginningCareer())
-                * PRICE_PER_MONTH / calculatePlayerAge(player.getBirthDate()));
+        int playerAge = calculatePlayerAge(player.getBirthDate());
+        if (playerAge > 0) {
+            return BigDecimal.valueOf(getAmountOfMonthExperience(player.getDateOfBeginningCareer())
+                    * PRICE_PER_MONTH / calculatePlayerAge(player.getBirthDate()));
+        }
+        throw new TransferStatusException(String
+                .format("Player's, with id: %s, age is less than 1", playerId));
+    }
+
+    private Team getSellingTeam(Player player) {
+        Team sellingTeam;
+        if (player.getTeam() != null) {
+            sellingTeam = teamService.findById(player.getTeam().getId());
+        } else {
+            throw new TransferStatusException(String
+                    .format("Player with id: %s, don't have team, that's why he cannot "
+                            + "be transferred", player.getId()));
+        }
+        return sellingTeam;
+    }
+
+    private void performBudgetUpdates(Team buyingTeam,
+                                      Team sellingTeam,
+                                      BigDecimal amountToPay) {
+        validateBudgetForTransferOperation(buyingTeam, amountToPay);
+
+        buyingTeam.setBudget(buyingTeam.getBudget().subtract(amountToPay));
+        sellingTeam.setBudget(sellingTeam.getBudget().add(amountToPay));
     }
 
     private int getAmountOfMonthExperience(LocalDate date) {
@@ -95,7 +121,7 @@ public class TransferServiceImpl implements TransferService {
         }
     }
 
-    private BigDecimal getTransferFee(Team buyingTeam, Player player, Transfer transfer) {
+    private BigDecimal getTransferFee(Team buyingTeam, Player player) {
         BigDecimal amountWithoutCommission = calculatePriceWithoutCommission(player.getId());
 
         BigDecimal commissionAmount = amountWithoutCommission
@@ -106,7 +132,7 @@ public class TransferServiceImpl implements TransferService {
     }
 
     private void updateDataInDataBase(Team buyingTeam, Team sellingTeam, Player player) {
-        playerService.changeTeamForTransfer(player.getId(), buyingTeam);
+        playerService.changeTeamForTransfer(player.getId(), buyingTeam.getId());
         teamService.update(buyingTeam.getId(), buyingTeam);
         teamService.update(sellingTeam.getId(), sellingTeam);
     }

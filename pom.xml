@@ -6,15 +6,15 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.4</version>
+		<version>3.1.2</version>
 	</parent>
 
-	<groupId>demo</groupId>
+	<groupId>application</groupId>
 	<artifactId>application</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<description>Demo project: Spring Boot + Angular</description>
+	<description>Football Manager App: Spring Boot + Angular</description>
 
 	<modules>
 		<module>frontend</module>

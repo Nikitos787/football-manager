@@ -3,9 +3,7 @@ package com.example.backend.controller;
 import com.example.backend.dto.request.PlayerRequestDto;
 import com.example.backend.dto.response.PlayerResponseDto;
 import com.example.backend.mapper.PlayerMapper;
-import com.example.backend.model.Team;
 import com.example.backend.service.PlayerService;
-import com.example.backend.service.TeamService;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class PlayerController {
     private final PlayerService playerService;
     private final PlayerMapper playerMapper;
-    private final TeamService teamService;
 
     @PostMapping
     public PlayerResponseDto save(@Valid @RequestBody PlayerRequestDto dto) {
@@ -54,8 +51,7 @@ public class PlayerController {
     @PutMapping("/{playerId}/teams/{teamId}")
     public void hirePlayerToTeam(@PathVariable Long playerId,
                                  @PathVariable Long teamId) {
-        Team team = teamService.findById(teamId);
-        playerService.hirePlayerToTeam(playerId, team);
+        playerService.hirePlayerToTeam(playerId, teamId);
     }
 
     @DeleteMapping("/{id}")
