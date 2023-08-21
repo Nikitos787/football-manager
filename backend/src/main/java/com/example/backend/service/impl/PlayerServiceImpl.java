@@ -6,7 +6,6 @@ import com.example.backend.model.Team;
 import com.example.backend.repository.PlayerRepository;
 import com.example.backend.service.PlayerService;
 import com.example.backend.service.TeamService;
-import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,7 +21,6 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public Player save(Player player) {
-        player.setDateOfBeginningCareer(LocalDate.now());
         return playerRepository.save(player);
     }
 
@@ -70,7 +68,7 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public List<Player> search(String name) {
-        return playerRepository.findAllBySecondName(name);
+        return playerRepository.findAllBySecondNameLikeIgnoreCase(name);
     }
 
     @Override
@@ -92,7 +90,8 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public void fireAllByTeam(Long teamId) {
         List<Player> players = findAllByTeam(teamId);
-        players.forEach(player -> firePlayerFromTeam(player.getId()));
+        players.forEach(player -> player.setTeam(null));
+        playerRepository.saveAll(players);
     }
 
     @Override

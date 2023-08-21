@@ -17,16 +17,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class TransferServiceImpl implements TransferService {
     private static final Long PRICE_PER_MONTH = 100000L;
-    
+
     private final TransferRepository transferRepository;
     private final TeamService teamService;
     private final PlayerService playerService;
 
+    @Transactional
     @Override
     public Transfer save(Transfer transfer) {
         Team buyingTeam = teamService.findById(transfer.getBuyingTeam().getId());
@@ -72,15 +74,13 @@ public class TransferServiceImpl implements TransferService {
     }
 
     private Team getSellingTeam(Player player) {
-        Team sellingTeam;
         if (player.getTeam() != null) {
-            sellingTeam = teamService.findById(player.getTeam().getId());
+            return player.getTeam();
         } else {
             throw new TransferStatusException(String
                     .format("Player with id: %s, don't have team, that's why he cannot "
                             + "be transferred", player.getId()));
         }
-        return sellingTeam;
     }
 
     private void performBudgetUpdates(Team buyingTeam,
