@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 import lombok.Data;
@@ -52,6 +53,11 @@ public class Player {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Status status = Status.UNEMPLOYED;
+
+    @PrePersist
+    private void onCreate() {
+        dateOfBeginningCareer = LocalDate.now();
+    }
 
     public enum Position {
         GOALKEEPER, DEFENDER, MIDFIELDER, STRIKER

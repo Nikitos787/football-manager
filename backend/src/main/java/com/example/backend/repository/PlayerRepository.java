@@ -17,7 +17,7 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
 
     @Query("FROM Player p LEFT JOIN FETCH p.team "
             + "WHERE UPPER(p.secondName) LIKE UPPER(CONCAT('%', :name, '%'))")
-    List<Player> findAllBySecondName(@Param("name") String name);
+    List<Player> findAllBySecondNameLikeIgnoreCase(@Param("name") String name);
 
     @Query("FROM Player p LEFT JOIN FETCH p.team WHERE p.id =:id")
     Optional<Player> findByIdWithTeam(@Param("id") Long id);
